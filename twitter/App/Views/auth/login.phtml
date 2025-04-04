@@ -1,0 +1,74 @@
+<div class="container mt-2">
+    <?php 
+    if(isset($_GET['conta_criada']) && $_GET['conta_criada'] == 1){ 
+    ?>
+    <div class="bg-success pt-2 text-white row my-2">
+        <h5>Conta Criada!</h5>
+    </div>
+    <?php 
+    } 
+    ?>
+    <?php 
+    if(isset($_GET['senha_alterada']) && $_GET['senha_alterada'] == 1){ 
+    ?>
+    <div class="bg-success pt-2 text-white row my-2">
+        <h5>Senha Alterada!</h5>
+    </div>
+    <?php 
+    } 
+    ?>
+    <?php 
+    if(isset($this->view->erro) && $this->view->erro == 1){ 
+    ?>
+    <div class="bg-danger pt-2 text-white row my-2">
+        <h5>Email e/ou senha inválidos</h5>
+    </div>
+    <?php 
+    } 
+    ?>
+    <?php 
+    if(isset($_GET['erro']) && $_GET['erro'] == 2){ 
+    ?>
+    <div class="bg-danger pt-2 text-white row my-2">
+        <h5>Faça o login para acessar</h5>
+    </div>
+    <?php 
+    } 
+    ?>
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <div class="card">
+                <div class="card-body">
+                    <div class="d-flex justify-content-center my-3">
+                        <img src="img/x.jpg" width="15%">
+                    </div>
+                    <form action="/login_post" method="post">
+                    <div>
+                        <h4 class="mb-3">Faça Login</h4>
+                        <div class="mb-3">
+                            <label for="email" class="mb-1">Email:</label>
+                            <input type="email" id="email" name="email" class="form-control" value="<?= isset($this->view->erro) ? $this->view->email : '' ?>" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="senha" class="mb-1">Senha:</label>
+                            <input type="password" id="senha" name="senha" class="form-control" value="<?= isset($this->view->erro) ? $this->view->senha : '' ?>" required>
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        <a href="/esqueceu_senha" class="link-azul">Esqueceu a senha?</a>
+                    </div>
+                    <div class="row">
+                        <div class="col-6 offset-3">
+                            <input type="submit" value="Entrar" class="fw-bold btn btn-primary w-100">
+                        </div>
+                    </div>
+                    </form>
+                    <div class="mt-4 mb-1">
+                        <span>Não tem uma conta? <a href="/criar_conta" class="link-azul">Crie uma aqui</a></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

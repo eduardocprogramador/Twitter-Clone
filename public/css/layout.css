@@ -1,0 +1,10 @@
+body{
+    background-color: #F5F4F8;
+}
+.borda{
+    border: 1px solid red;
+}
+.link-azul {
+    color: rgb(20, 63, 215);
+    text-decoration: none; 
+}
