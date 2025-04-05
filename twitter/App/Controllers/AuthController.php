@@ -22,7 +22,7 @@ class AuthController extends Action{
         ob_start();
         $user=Container::getModel('Usuarios');
         $user->__set('email',$_POST['email']);
-        $user->__set('senha',$_POST['senha']);
+        $user->__set('senha',md5($_POST['senha']));
         $retorno=$user->logar();
         $user->__set('id',$retorno['id']);
         $user->__set('username',$retorno['username']);
@@ -46,6 +46,7 @@ class AuthController extends Action{
         $user->__set('email',$_POST['email']);
         $user->__set('senha',$_POST['senha']);
         if($user->validarCadastro() && count($user->getUsername()) == 0 && count($user->getEmail()) == 0 && $_POST['senha'] == $_POST['confirmar_senha']){
+            $user->__set('senha',md5($_POST['senha']));
             $user->salvar();
             header('Location: /login?conta_criada=1');
         }else{
@@ -96,6 +97,7 @@ class AuthController extends Action{
         $user->__set('id',$_POST['id']);
         $user->__set('senha',$_POST['senha']);
         if($user->validarCadastro() && $_POST['senha'] == $_POST['confirmar_senha']){
+            $user->__set('senha',md5($_POST['senha']));
             $user->redefinirSenha();
             header('Location: /login?senha_alterada=1');
         }else{
