@@ -69,7 +69,7 @@
 										<?php
 										$segue = false;
 										foreach($this->view->seguindo as $key => $seguindo){
-											if($value['id'] == $seguindo){
+											if($value['id'] == $seguindo['id_usuario_seguindo']){
 												$segue = true;
         										break;
 											}
