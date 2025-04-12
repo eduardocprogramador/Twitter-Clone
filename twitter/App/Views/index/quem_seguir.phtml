@@ -1,0 +1,99 @@
+<link rel="stylesheet" href="css/index.css">
+<nav class="navbar navbar-expand-lg menu">
+	<div class="container">
+	  <div class="navbar-nav">
+	  	<a class="menuItem" href="/">Home</a>
+	  	<a class="menuItem" href="/sair">Sair</a>
+		<img src="/img/x.jpg" class="menuIco"/>
+	  </div>
+	</div>
+</nav>
+<div class="container mt-5">
+	<div class="row pt-2">	
+		<div class="col-md-3">
+			<div class="perfil">
+				<div class="perfilTopo"></div>
+				<div class="perfilPainel">
+					<div class="row mt-2 mb-2">
+						<div class="col mb-2">
+							<span class="perfilPainelNome">Nome do Usuário</span>
+						</div>
+					</div>
+					<div class="row mb-2">
+						<div class="col">
+							<span class="perfilPainelItem">Tweets</span><br />
+							<span class="perfilPainelItemValor">0</span>
+						</div>
+						<div class="col">
+							<span class="perfilPainelItem">Seguindo</span><br />
+							<span class="perfilPainelItemValor">0</span>
+						</div>
+						<div class="col">
+							<span class="perfilPainelItem">Seguidores</span><br />
+							<span class="perfilPainelItemValor">0</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-6">
+			<div class="row mb-2">
+				<div class="col">
+					<div class="card">
+						<div class="card-body">
+							<form method="get" action="/quem_seguir">
+								<div class="input-group mb-3">
+									<input type="text" class="form-control" name="pesquisa" placeholder="Quem você está procurando?">
+									<div class="input-group-append">
+										<button class="btn btn-primary" type="submit">Procurar</button>
+									</div>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+			<?php
+            foreach($this->view->users as $key => $value){
+            ?>
+			<div class="row mb-2">
+				<div class="col">
+					<div class="card">
+						<div class="card-body">
+							<div class="row">
+								<div class="col-md-6">
+									<?= $value['username'] ?>
+								</div>					
+								<div class="d-flex justify-content-end">
+									<div>
+										<?php
+										$segue = false;
+										foreach($this->view->seguindo as $key => $seguindo){
+											if($value['id'] == $seguindo){
+												$segue = true;
+        										break;
+											}
+										}
+										if(!$segue){
+										?>
+										<a href="/seguir?id=<?= $value['id'] ?>&pesquisa=<?= $_GET['pesquisa'] ?>" class="btn btn-success">Seguir</a>
+										<?php
+										} else{
+										?>
+										<a href="/deixar_seguir?id=<?= $value['id'] ?>&pesquisa=<?= $_GET['pesquisa'] ?>" class="btn btn-danger">Deixar de seguir</a>
+										<?php
+										} 
+										?>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<?php
+            }
+            ?>
+		</div>
+	</div>
+</div>

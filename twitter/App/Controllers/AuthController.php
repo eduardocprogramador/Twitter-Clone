@@ -18,8 +18,7 @@ class AuthController extends Action{
     public function nova_senha(){
         $this->render('nova_senha');
     }
-    public function login_post(){
-        ob_start();
+    public function login_post(){      
         $user=Container::getModel('Usuarios');
         $user->__set('email',$_POST['email']);
         $user->__set('senha',md5($_POST['senha']));
@@ -30,22 +29,20 @@ class AuthController extends Action{
             session_start();
             $_SESSION['id']=$user->__get('id');
             $_SESSION['username']=$user->__get('username');
-            header('Location: /home');
+            header('Location: /');
         }else{
             $this->view->erro=1;
             $this->view->email=$_POST['email'];
             $this->view->senha=$_POST['senha'];
             $this->render('login');
-        }
-        exit();
+        } 
     }
     public function criar_conta_post(){
-        ob_start();
         $user=Container::getModel('Usuarios');
         $user->__set('username',$_POST['username']);
         $user->__set('email',$_POST['email']);
         $user->__set('senha',$_POST['senha']);
-        if($user->validarCadastro() && count($user->getUsername()) == 0 && count($user->getEmail()) == 0 && $_POST['senha'] == $_POST['confirmar_senha']){
+        if($user->validar_cadastro() && count($user->getUsername()) == 0 && count($user->getEmail()) == 0 && $_POST['senha'] == $_POST['confirmar_senha']){
             $user->__set('senha',md5($_POST['senha']));
             $user->salvar();
             header('Location: /login?conta_criada=1');
@@ -60,7 +57,7 @@ class AuthController extends Action{
             }else if(count($user->getEmail()) > 0){
                 $this->view->erro=2;
                 $this->render('criar_conta');
-            }else if(!($user->validarCadastro())){
+            }else if(!($user->validar_cadastro())){
                 $this->view->erro=3;
                 $this->render('criar_conta');
             }else{
@@ -68,7 +65,6 @@ class AuthController extends Action{
                 $this->render('criar_conta');
             }
         }
-        exit();
     }
     public function sair(){
         session_start();
@@ -76,7 +72,6 @@ class AuthController extends Action{
         header('Location: /login');
     }
     public function enviar_email(){
-        ob_start();
         $user=Container::getModel('Usuarios');
         $user->__set('email',$_POST['email']);
         if(count($user->getEmail()) > 0){
@@ -89,22 +84,20 @@ class AuthController extends Action{
             $this->view->email=$_POST['email'];
             $this->render('esqueceu_senha');
         }
-        exit();
     }
-    public function nova_senha_post(){
-        ob_start();
+    public function nova_senha_post(){ 
         $user=Container::getModel('Usuarios');
         $user->__set('id',$_POST['id']);
         $user->__set('senha',$_POST['senha']);
-        if($user->validarCadastro() && $_POST['senha'] == $_POST['confirmar_senha']){
+        if($user->validar_cadastro() && $_POST['senha'] == $_POST['confirmar_senha']){
             $user->__set('senha',md5($_POST['senha']));
-            $user->redefinirSenha();
+            $user->redefinir_senha();
             header('Location: /login?senha_alterada=1');
         }else{
             $this->view->senha=$_POST['senha'];
             $this->view->confirmar_senha=$_POST['confirmar_senha'];
             $this->view->id=$_POST['id'];
-            if(!($user->validarCadastro())){
+            if(!($user->validar_cadastro())){
                 $this->view->erro=1;
                 $this->render('nova_senha');
             }else{

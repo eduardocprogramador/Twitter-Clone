@@ -51,15 +51,35 @@ class Route extends Bootstrap{
             'controller' => 'AuthController',
             'action' => 'nova_senha_post'
         );
-        $routes['home']=array(
-            'route' => '/home',
-            'controller' => 'indexController',
-            'action' => 'home'
-        );
         $routes['sair']=array(
             'route' => '/sair',
             'controller' => 'AuthController',
             'action' => 'sair'
+        );
+        $routes['index']=array(
+            'route' => '/',
+            'controller' => 'indexController',
+            'action' => 'index'
+        );
+        $routes['tweet']=array(
+            'route' => '/tweet',
+            'controller' => 'indexController',
+            'action' => 'tweet'
+        );
+        $routes['quem_seguir']=array(
+            'route' => '/quem_seguir',
+            'controller' => 'indexController',
+            'action' => 'quem_seguir'
+        );
+        $routes['seguir']=array(
+            'route' => '/seguir',
+            'controller' => 'indexController',
+            'action' => 'seguir'
+        );
+        $routes['deixar_seguir']=array(
+            'route' => '/deixar_seguir',
+            'controller' => 'indexController',
+            'action' => 'deixar_seguir'
         );
         $this->setRoutes($routes);
     }
