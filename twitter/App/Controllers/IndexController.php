@@ -14,9 +14,14 @@ class IndexController extends Action{
     public function index(){
         $this->valida_autenticacao();
         $tweet=Container::getModel('Tweet');
-        $tweet->__set('id_usuario',$_SESSION['id']);
-        $tweets=$tweet->buscar_tweets();
+        $tweet->__set('id_usuario', $_SESSION['id']);
+        $tweets=$tweet->buscar_meus_tweets();
         $this->view->tweets=$tweets;
+        $user=Container::getModel('Usuarios');
+        $user->__set('id', $_SESSION['id']);
+        $this->view->total_tweets=$user->total_tweets()['total_tweets'];
+        $this->view->total_seguindo=$user->total_seguindo()['total_seguindo'];
+        $this->view->total_seguidores=$user->total_seguidores()['total_seguidores'];
         $this->render('index');
     }
     public function tweet(){
@@ -32,10 +37,10 @@ class IndexController extends Action{
         $pesquisa=isset($_GET['pesquisa']) ? $_GET['pesquisa'] : '';
         $users=array();
         $seguindo=array();
+        $user=Container::getModel('Usuarios');
+        $user->__set('id', $_SESSION['id']);
         if($pesquisa != ''){
-            $user=Container::getModel('Usuarios');
             $user->__set('username', $pesquisa);
-            $user->__set('id', $_SESSION['id']);
             $users=$user->buscar_usuarios();
             $user_seguindo=Container::getModel('UsuariosSeguindo');
             $user_seguindo->__set('id', $_SESSION['id']);
@@ -43,6 +48,9 @@ class IndexController extends Action{
         }
         $this->view->users=$users;
         $this->view->seguindo=$seguindo;
+        $this->view->total_tweets=$user->total_tweets()['total_tweets'];
+        $this->view->total_seguindo=$user->total_seguindo()['total_seguindo'];
+        $this->view->total_seguidores=$user->total_seguidores()['total_seguidores'];
         $this->render('quem_seguir');
     }
     public function seguir(){
