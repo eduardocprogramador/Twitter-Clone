@@ -69,6 +69,33 @@
             <?php
             }
             ?>
+			<div class="row">
+				<nav aria-label="Page navigation example">
+					<ul class="pagination">
+						<li class="page-item">
+							<a class="page-link" href="?pagina=1" aria-label="Previous">
+								<span aria-hidden="true">&laquo;</span>
+								<span class="sr-only">Previous</span>
+							</a>
+						</li>
+						<?php
+						for($i=1;$i<=$this->view->total_paginas;$i++){
+						?>
+						<li class="page-item">
+							<a class="page-link <?= $this->view->pagina_ativa == $i ? 'active' : '' ?>" href="?pagina=<?= $i ?>"><?= $i ?></a>
+						</li>
+						<?php
+						}
+						?>
+						<li class="page-item">
+							<a class="page-link" href="?pagina=<?= $this->view->total_paginas ?>" aria-label="Next">
+								<span aria-hidden="true">&raquo;</span>
+								<span class="sr-only">Next</span>
+							</a>
+						</li>
+					</ul>
+				</nav>
+			</div>
 		</div>
 		<div class="col-md-3">
 			<div class="quemSeguir">

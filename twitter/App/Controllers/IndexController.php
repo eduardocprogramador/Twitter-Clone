@@ -15,7 +15,13 @@ class IndexController extends Action{
         $this->valida_autenticacao();
         $tweet=Container::getModel('Tweet');
         $tweet->__set('id_usuario', $_SESSION['id']);
-        $tweets=$tweet->buscar_meus_tweets();
+        $total_registros_pagina=2;
+        $pagina=isset($_GET['pagina']) ? $_GET['pagina'] : 1;
+        $deslocamento=($pagina-1)*$total_registros_pagina;
+        $total_meus_tweets=$tweet->total_meus_tweets();
+        $this->view->pagina_ativa=$pagina;
+        $this->view->total_paginas=ceil($total_meus_tweets['total']/$total_registros_pagina);
+        $tweets=$tweet->buscar_meus_tweets($total_registros_pagina,$deslocamento);
         $this->view->tweets=$tweets;
         $user=Container::getModel('Usuarios');
         $user->__set('id', $_SESSION['id']);
