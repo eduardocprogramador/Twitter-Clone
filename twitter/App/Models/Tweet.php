@@ -24,6 +24,13 @@ class Tweet extends Model {
         $stmt->execute();
         return $this;
     }
+    public function remover(){
+        $query='delete from tweets where id = :id';
+        $stmt=$this->db->prepare($query);
+        $stmt->bindValue(':id',$this->__get('id'));
+        $stmt->execute();
+        return $this;
+    }
     public function total_meus_tweets(){
         $query="select count(*) as total
                 from tweets as t 

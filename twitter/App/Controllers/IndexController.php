@@ -15,7 +15,7 @@ class IndexController extends Action{
         $this->valida_autenticacao();
         $tweet=Container::getModel('Tweet');
         $tweet->__set('id_usuario', $_SESSION['id']);
-        $total_registros_pagina=2;
+        $total_registros_pagina=10;
         $pagina=isset($_GET['pagina']) ? $_GET['pagina'] : 1;
         $deslocamento=($pagina-1)*$total_registros_pagina;
         $total_meus_tweets=$tweet->total_meus_tweets();
@@ -36,6 +36,12 @@ class IndexController extends Action{
         $tweet->__set('tweet',$_POST['tweet']);
         $tweet->__set('id_usuario',$_SESSION['id']);
         $tweet->salvar();
+        header('Location: /');
+    }
+    public function remover(){
+        $tweet=Container::getModel('Tweet');
+        $tweet->__set('id',$_GET['id']);
+        $tweet->remover();
         header('Location: /');
     }
     public function quem_seguir(){

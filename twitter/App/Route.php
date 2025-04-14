@@ -66,6 +66,11 @@ class Route extends Bootstrap{
             'controller' => 'indexController',
             'action' => 'tweet'
         );
+        $routes['remover']=array(
+            'route' => '/remover',
+            'controller' => 'indexController',
+            'action' => 'remover'
+        );
         $routes['quem_seguir']=array(
             'route' => '/quem_seguir',
             'controller' => 'indexController',
